@@ -1,0 +1,7 @@
+{
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveTimeout": 1000,
+    "[ruby]": {
+        "editor.defaultFormatter": "misogi.ruby-rubocop"
+    }
+}
