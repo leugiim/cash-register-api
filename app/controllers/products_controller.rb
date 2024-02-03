@@ -3,9 +3,7 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.all
-
-    render json: @products
+    render json: ProductService.all
   end
 
   # GET /products/1
@@ -15,35 +13,36 @@ class ProductsController < ApplicationController
 
   # POST /products
   def create
-    @product = Product.new(product_params)
+    @product = ProductService.create!(params: product_params)
 
-    if @product.save
-      render json: @product, status: :created, location: @product
-    else
+    if @product.errors.any?
       render json: @product.errors, status: :unprocessable_entity
+    else
+      render json: @product, status: :created, location: @product
     end
   end
 
   # PATCH/PUT /products/1
   def update
-    if @product.update(product_params)
-      render json: @product
-    else
+    @product = ProductService.update!(product: @product, params: product_params)
+
+    if @product.errors.any?
       render json: @product.errors, status: :unprocessable_entity
+    else
+      render json: @product
     end
   end
 
   # DELETE /products/1
   def destroy
-    @product.destroy!
+    ProductService.destroy!(product: @product)
   end
 
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_product
-    puts product_params
-    @product = Product.find(params[:id])
+    @product = ProductService.get(id: params[:id])
   end
 
   # Only allow a list of trusted parameters through.
