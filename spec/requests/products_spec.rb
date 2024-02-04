@@ -12,12 +12,14 @@ RSpec.describe 'products', type: :request do
 
   path '/products' do
     get('list products') do
+      tags 'Products'
       response(200, 'successful') do
         run_test!
       end
     end
 
     post('create product') do
+      tags 'Products'
       consumes 'application/json'
       parameter name: :product, in: :body, schema: {
         type: :object,
@@ -39,12 +41,14 @@ RSpec.describe 'products', type: :request do
     parameter name: 'id', in: :path, type: :string, description: 'id'
 
     get('show product') do
+      tags 'Products'
       response(200, 'successful') do
         run_test!
       end
     end
 
     patch('update product') do
+      tags 'Products'
       consumes 'application/json'
       parameter name: :product, in: :body, schema: {
         type: :object,
@@ -60,6 +64,7 @@ RSpec.describe 'products', type: :request do
     end
 
     put('update product') do
+      tags 'Products'
       consumes 'application/json'
       parameter name: :product, in: :body, schema: {
         type: :object,
@@ -75,6 +80,7 @@ RSpec.describe 'products', type: :request do
     end
 
     delete('delete product') do
+      tags 'Products'
       response(204, 'successful') do
         run_test!
       end
