@@ -15,3 +15,11 @@ products = [{ id: "GR1", name: "Green Tea", price: 3.11 },
 products.each do |product|
   ProductService.create!(params: product)
 end
+
+discounts = [{ product_id: "GR1", strategy: "NxM", quantity: 2, discount: 1 },
+             { product_id: "SR1", strategy: "Flat", quantity: 3, discount: 4.50 },
+             { product_id: "CF1", strategy: "Percent", quantity: 3, discount: 0.33 }]
+
+discounts.each do |discount|
+  DiscountService.create!(params: discount)
+end

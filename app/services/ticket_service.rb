@@ -15,25 +15,33 @@ class TicketService
 
   def self.preview(params:)
     products_ids = params[:products_ids].split(",")
-    ticket = Ticket.new({ total_price: 0 })
+    ticket = Ticket.new({ price: 0,
+                          discount: 0,
+                          total_price: 0 })
 
     products_ids
       .each_with_object(Hash.new(0)) { |id, hash| hash[id] += 1 }
-      .each do |product_id, quantity|
-        product = ProductService.get(id: product_id)
-        ticket_detail = create_ticket_detail(ticket:, product:, quantity:)
-        ticket.total_price += ticket_detail.total_price
-      end
+      .each { |product_id, quantity| create_ticket_detail(ticket:, product_id:, quantity:) }
+
     ticket
   end
 
-  def self.create_ticket_detail(ticket:, product:, quantity:)
-    ticket.ticket_details.build(
+  def self.create_ticket_detail(ticket:, product_id:, quantity:)
+    product = ProductService.get(id: product_id)
+    discount = 0.0
+
+    ticket_detail = ticket.ticket_details.build(
       product_id: product.id,
       product_name: product.name,
       quantity:,
       price_per_unit: product.price,
-      total_price: product.price * quantity
+      price: product.price * quantity,
+      discount:,
+      total_price: product.price * quantity - discount
     )
+
+    ticket.price += ticket_detail.price
+    ticket.discount += ticket_detail.discount
+    ticket.total_price += ticket_detail.total_price
   end
 end
