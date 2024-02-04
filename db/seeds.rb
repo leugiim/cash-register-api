@@ -18,7 +18,7 @@ end
 
 discounts = [{ product_id: "GR1", strategy: "NxM", quantity: 2, discount: 1 },
              { product_id: "SR1", strategy: "Flat", quantity: 3, discount: 4.50 },
-             { product_id: "CF1", strategy: "Percent", quantity: 3, discount: 0.33 }]
+             { product_id: "CF1", strategy: "Percent", quantity: 3, discount: 0.33333333 }]
 
 discounts.each do |discount|
   DiscountService.create!(params: discount)
