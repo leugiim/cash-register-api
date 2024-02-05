@@ -81,7 +81,7 @@ RSpec.describe 'products', type: :request do
 
     delete('delete product') do
       tags 'Products'
-      response(204, 'successful') do
+      response(202, 'successful') do
         run_test!
       end
     end

@@ -92,7 +92,7 @@ paths:
       tags:
       - Products
       responses:
-        '204':
+        '202':
           description: successful
   "/tickets":
     get:

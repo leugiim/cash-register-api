@@ -3,12 +3,16 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    render json: ProductService.all
+    ok json: ProductService.all
+  rescue StandardError => e
+    error json: e.expection, status: :internal_server_error
   end
 
   # GET /products/1
   def show
-    render json: @product
+    ok json: @product
+  rescue StandardError => e
+    error json: e.message, status: :internal_server_error
   end
 
   # POST /products
@@ -16,10 +20,12 @@ class ProductsController < ApplicationController
     @product = ProductService.create!(params: product_params)
 
     if @product.errors.any?
-      render json: @product.errors, status: :unprocessable_entity
+      error json: @product.errors, status: :unprocessable_entity
     else
-      render json: @product, status: :created, location: @product
+      ok json: @product, status: :created, location: @product
     end
+  rescue StandardError => e
+    error json: e.message, status: :internal_server_error
   end
 
   # PATCH/PUT /products/1
@@ -27,15 +33,21 @@ class ProductsController < ApplicationController
     @product = ProductService.update!(product: @product, params: product_params)
 
     if @product.errors.any?
-      render json: @product.errors, status: :unprocessable_entity
+      error json: @product.errors, status: :unprocessable_entity
     else
-      render json: @product
+      ok json: @product
     end
+  rescue StandardError => e
+    error json: e.message, status: :internal_server_error
   end
 
   # DELETE /products/1
   def destroy
     ProductService.destroy!(product: @product)
+
+    ok json: nil, status: :accepted
+  rescue StandardError => e
+    error json: e.message, status: :internal_server_error
   end
 
   private
@@ -43,6 +55,8 @@ class ProductsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_product
     @product = ProductService.get(id: params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    error json: e.message, status: :not_found
   end
 
   # Only allow a list of trusted parameters through.
