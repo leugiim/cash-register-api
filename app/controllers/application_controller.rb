@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::API
   def ok(json:, status: :ok, location: nil)
     response = ResponseApi.new.ok(json, status)
-
     render json: response, status:, location:
   end
 
