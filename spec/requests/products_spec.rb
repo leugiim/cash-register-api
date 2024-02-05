@@ -8,6 +8,7 @@ RSpec.describe 'products', type: :request do
 
   before do
     allow(Product).to receive(:find).with("AP1").and_return(product)
+    allow_any_instance_of(Product).to receive(:save!).and_return(true)
   end
 
   path '/products' do

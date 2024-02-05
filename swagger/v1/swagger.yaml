@@ -4,6 +4,107 @@ info:
   title: API V1
   version: v1
 paths:
+  "/discounts":
+    get:
+      summary: list discounts
+      tags:
+      - Discounts
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create discount
+      tags:
+      - Discounts
+      parameters: []
+      responses:
+        '201':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                strategy:
+                  type: string
+                quantity:
+                  type: number
+                discount:
+                  type: number
+              required:
+              - product_id
+              - strategy
+              - quantity
+              - discount
+  "/discounts/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show discount
+      tags:
+      - Discounts
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update discount
+      tags:
+      - Discounts
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                strategy:
+                  type: string
+                quantity:
+                  type: number
+                discount:
+                  type: number
+    put:
+      summary: update discount
+      tags:
+      - Discounts
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                strategy:
+                  type: string
+                quantity:
+                  type: number
+                discount:
+                  type: number
+    delete:
+      summary: delete discount
+      tags:
+      - Discounts
+      responses:
+        '202':
+          description: successful
   "/products":
     get:
       summary: list products
