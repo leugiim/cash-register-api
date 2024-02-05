@@ -3,12 +3,16 @@ class TicketsController < ApplicationController
 
   # GET /tickets
   def index
-    render json: TicketService.all
+    json json: TicketService.all
+  rescue StandardError => e
+    error json: e.expection, status: :internal_server_error
   end
 
   # GET /tickets/1
   def show
-    render json: @ticket
+    json json: @ticket
+  rescue StandardError => e
+    error json: e.message, status: :internal_server_error
   end
 
   # POST /tickets
@@ -16,10 +20,12 @@ class TicketsController < ApplicationController
     @ticket = TicketService.create!(params: ticket_params)
 
     if @ticket.errors.any?
-      render json: @ticket.errors, status: :unprocessable_entity
+      error json: @ticket.errors, status: :unprocessable_entity
     else
-      render json: @ticket, status: :created, location: @ticket
+      json json: @ticket, status: :created, location: @ticket
     end
+  rescue StandardError => e
+    error json: e.message, status: :internal_server_error
   end
 
   # POST /tickets/preview
@@ -27,10 +33,12 @@ class TicketsController < ApplicationController
     @ticket = TicketService.preview(params: ticket_params)
 
     if @ticket.errors.any?
-      render json: @ticket.errors, status: :unprocessable_entity
+      error json: @ticket.errors, status: :unprocessable_entity
     else
-      render json: @ticket
+      json json: @ticket
     end
+  rescue StandardError => e
+    error json: e.message, status: :internal_server_error
   end
 
   private
@@ -38,6 +46,8 @@ class TicketsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_ticket
     @ticket = TicketService.get(id: params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    error json: e.message, status: :not_found
   end
 
   # Only allow a list of trusted parameters through.
