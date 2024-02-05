@@ -145,6 +145,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.7.3)
     rack (3.0.9)
+    rack-cors (2.0.1)
+      rack (>= 2.0.0)
     rack-session (2.0.0)
       rack (>= 3.0.0)
     rack-test (2.1.0)
@@ -219,6 +221,8 @@ GEM
       actionpack (>= 3.1, < 7.2)
       railties (>= 3.1, < 7.2)
     ruby2_keywords (0.0.5)
+    snaky_camel (0.0.2)
+      rails (>= 4.0)
     sqlite3 (1.7.2-aarch64-linux)
     sqlite3 (1.7.2-arm-linux)
     sqlite3 (1.7.2-arm64-darwin)
@@ -248,9 +252,11 @@ DEPENDENCIES
   bootsnap
   debug
   puma (>= 5.0)
+  rack-cors
   rails (~> 7.1.3)
   rspec-rails (~> 5.0)
   rswag
+  snaky_camel
   sqlite3 (~> 1.4)
   tzinfo-data
 
