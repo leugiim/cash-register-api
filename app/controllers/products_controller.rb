@@ -3,14 +3,14 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    json json: ProductService.all
+    ok json: ProductService.all
   rescue StandardError => e
     error json: e.expection, status: :internal_server_error
   end
 
   # GET /products/1
   def show
-    json json: @product
+    ok json: @product
   rescue StandardError => e
     error json: e.message, status: :internal_server_error
   end
@@ -22,7 +22,7 @@ class ProductsController < ApplicationController
     if @product.errors.any?
       error json: @product.errors, status: :unprocessable_entity
     else
-      json json: @product, status: :created, location: @product
+      ok json: @product, status: :created, location: @product
     end
   rescue StandardError => e
     error json: e.message, status: :internal_server_error
@@ -35,7 +35,7 @@ class ProductsController < ApplicationController
     if @product.errors.any?
       error json: @product.errors, status: :unprocessable_entity
     else
-      json json: @product
+      ok json: @product
     end
   rescue StandardError => e
     error json: e.message, status: :internal_server_error
@@ -45,7 +45,7 @@ class ProductsController < ApplicationController
   def destroy
     ProductService.destroy!(product: @product)
 
-    json json: nil, status: :accepted
+    ok json: nil, status: :accepted
   rescue StandardError => e
     error json: e.message, status: :internal_server_error
   end

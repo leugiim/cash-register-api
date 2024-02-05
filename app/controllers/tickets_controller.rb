@@ -3,14 +3,14 @@ class TicketsController < ApplicationController
 
   # GET /tickets
   def index
-    json json: TicketService.all
+    ok json: TicketService.all
   rescue StandardError => e
     error json: e.expection, status: :internal_server_error
   end
 
   # GET /tickets/1
   def show
-    json json: @ticket
+    ok json: @ticket
   rescue StandardError => e
     error json: e.message, status: :internal_server_error
   end
@@ -22,7 +22,7 @@ class TicketsController < ApplicationController
     if @ticket.errors.any?
       error json: @ticket.errors, status: :unprocessable_entity
     else
-      json json: @ticket, status: :created, location: @ticket
+      ok json: @ticket, status: :created, location: @ticket
     end
   rescue StandardError => e
     error json: e.message, status: :internal_server_error
@@ -35,7 +35,7 @@ class TicketsController < ApplicationController
     if @ticket.errors.any?
       error json: @ticket.errors, status: :unprocessable_entity
     else
-      json json: @ticket
+      ok json: @ticket
     end
   rescue StandardError => e
     error json: e.message, status: :internal_server_error
