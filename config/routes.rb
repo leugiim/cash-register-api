@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :products
+  resources :discounts
   resources :tickets do
     post 'preview', on: :collection
   end
