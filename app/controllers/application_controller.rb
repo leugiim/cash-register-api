@@ -8,4 +8,8 @@ class ApplicationController < ActionController::API
     response = ResponseApi.new.error(json, status)
     render json: response, status:
   end
+
+  def parse_params
+    params.deep_transform_keys(&:underscore)
+  end
 end
