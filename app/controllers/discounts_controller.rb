@@ -61,6 +61,6 @@ class DiscountsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def discount_params
-    params.permit(:id, :product_id, :strategy, :quantity, :discount)
+    parse_params.permit(:id, :product_id, :strategy, :quantity, :discount)
   end
 end
