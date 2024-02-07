@@ -3,7 +3,7 @@ class Ticket < ApplicationRecord
   accepts_nested_attributes_for :ticket_details
 
   validates :price, numericality: { greater_than: 0 }, presence: true
-  validates :discount, numericality: { greater_than: 0 }, presence: true
+  validates :discount, numericality: { greater_than_or_equal_to: 0 }, presence: true
   validates :total_price, numericality: { greater_than: 0 }, presence: true
 
   def as_json(options = {})
